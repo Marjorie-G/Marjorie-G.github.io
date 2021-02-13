@@ -1,0 +1,32 @@
+body {
+    background: darkred;
+}
+
+h1 {
+    color: whitesmoke;
+}
+
+h3 {
+    color: whitesmoke;
+}
+
+#img-1 {
+    width : 20em;
+    border-radius: 100px;
+
+}
+
+.btn {
+    color: white;
+}
+
+.text-visibility {
+    display: none;
+
+}
+
+#js-text {
+    align-content: center;
+    text-align: center;
+    justify-content: center;
+}
