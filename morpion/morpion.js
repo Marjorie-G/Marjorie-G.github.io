@@ -1,13 +1,16 @@
 //Déclaration des variables
 
-let player1 = "X";
-let player2 = "O";
+const player1 = "X";
+const player2 = "O";
 let player = "X";
 let turnNumber = 1;
 
-let gamesWonPlayer1 = 0;
-let gamesWonPlayer2 = 0;
-let nobodyWon = 0;
+let gamesWonPlayer1;
+let gamesWonPlayer2;
+let gamesWonNobody;
+
+let playerTurn;
+let playerWon;
 
 let case1 ;
 let case2 ;
@@ -19,15 +22,57 @@ let case7 ;
 let case8 ;
 let case9 ;
 
+let player1Win = document.getElementById("js-player1-win");
+let player2Win = document.getElementById("js-player2-win");
+let nobodyWon = document.getElementById("js-nobody-win");
+
+//Au chargement de la page
+
+if (localStorage.length === 0) {
+    gamesWonPlayer1 = 0;
+    gamesWonPlayer2 = 0;
+    gamesWonNobody = 0;
+
+    localStorage.setItem("gamesWonPlayer1", gamesWonPlayer1);
+    localStorage.setItem("gamesWonPlayer2", gamesWonPlayer2);
+    localStorage.setItem("gamesWonNobody", gamesWonNobody);
+
+    displayScore();
+
+}
+else {
+
+    gamesWonPlayer1 = parseInt(localStorage.getItem("gamesWonPlayer1"));
+    gamesWonPlayer2 = parseInt(localStorage.getItem("gamesWonPlayer2"));
+    gamesWonNobody =  parseInt(localStorage.getItem("gamesWonNobody"));
+
+    displayScore();
+
+}
+
+//------------------ Fonction pour afficher les score
+
+function displayScore() {
+
+    player1Win.innerText = `Nombre de parties gagnées par le joueur ${player1} : ${gamesWonPlayer1}`;
+    player2Win.innerText= `Nombre de parties gagnées par le joueur ${player2} : ${gamesWonPlayer2}`;
+    nobodyWon.innerText = `Nombre de parties nulles : ${gamesWonNobody}`;
+
+}
+
 // ----------------- Fonction pour changer de joueur en fonction du tour
 
 function changePlayer() {
 
     if ((turnNumber % 2) == 0) {
         player = player2;
+        playerTurn = document.getElementById("js-player-turn");
+        playerTurn.innerText = `C'est au tour du joueur ${player} de jouer`;
     }
     else {
         player = player1;
+        playerTurn = document.getElementById("js-player-turn");
+        playerTurn.innerText = `C'est au tour du joueur ${player} de jouer`;
     }
 }
 
@@ -36,8 +81,8 @@ function changePlayer() {
 function win() {
 
 
-    if((case1 == case2 && case2 == case3 && case2 != "") || (case4 == case5 && case5 == case6 && case4 != "") || (case7 == case8 && case8 == case9 && case7 != "") || (case1 == case4 && case4 == case7 && case1 != "") ||
-        (case2 == case5 && case5 == case8 && case2 != "") || (case3 == case6 && case6 == case9 && case3 != "") || (case1 == case5 && case5 == case9 && case1 != "") || (case3 == case5 && case5 == case7 && case3 != "")) {
+    if((case1 === case2 && case2 === case3 && case2 !== "") || (case4 === case5 && case5 === case6 && case4 !== "") || (case7 === case8 && case8 === case9 && case7 !== "") || (case1 === case4 && case4 === case7 && case1 !== "") ||
+        (case2 === case5 && case5 === case8 && case2 !== "") || (case3 === case6 && case6 === case9 && case3 !== "") || (case1 === case5 && case5 === case9 && case1 !== "") || (case3 === case5 && case5 === case7 && case3 !== "")) {
         return true
     }
     else {
@@ -51,25 +96,24 @@ function playAgain() {
     history.go();
 }
 
-//----------------- Fonction pour stocker le nb de parties gagnées ou nulles ---
-
-function storageWin() {
-    localStorage.setItem("gamesWonPlayer1", gamesWonPlayer1);
-    localStorage.setItem("gamesWonPlayer2", gamesWonPlayer2);
-    localStorage.setItem("nobodyWon", nobodyWon);
-}
-
 //----------------- Fonction pour réinialiser les scores - on vide le stockage local
 
 function reset() {
     localStorage.clear();
+    playAgain();
 }
 
 //------------------ Fonction de jeu -- Programme principal ---------------------------------------
 
 function play() {
 
-    //On vérifier que le joueur a le droit de joueur sur la case
+    //On empêche la partie de se poursuivre si le joueur précédent a gagné
+    //ou si le nombre de tours est supérieur > 9
+    if (playerWon === true || turnNumber > 9) {
+        return;
+    }
+
+    //On vérifie que le joueur a le droit de joueur sur la case
     let h4 = document.getElementById("js-case-not-ok");
 
     if (event.target.innerText != "" ) {
@@ -92,30 +136,33 @@ function play() {
     case8 = document.getElementById("case8").innerText;
     case9 = document.getElementById("case9").innerText;
 
-    console.log(case1);
-
     //On vérifie si on a gagné
-    let playerWon = win();
+    playerWon = win();
 
-    if (playerWon == false) {
+    if (playerWon === true) {
 
-        if(turnNumber > 9)  {
-
+        if(player === player1) {
+            gamesWonPlayer1 = gamesWonPlayer1 + 1 ;
+            localStorage.setItem("gamesWonPlayer1", gamesWonPlayer1);
         }
+        else if (player === player2) {
+            gamesWonPlayer2 += 1 ;
+            localStorage.setItem("gamesWonPlayer2", gamesWonPlayer2);
+        }
+
+        displayScore();
+
     }
-    else {
-        if(player == player1) {
-            gamesWonPlayer1 += 1;
-        }
-        else if (player == player2) {
-            gamesWonPlayer2 += 1;
-        }
-
-        document.write("gagné");
-
+    else if (turnNumber === 9) {
+        gamesWonNobody += 1;
+        localStorage.setItem("gamesWonNobody", gamesWonNobody);
+        nobodyWon.innerText = `Nombre de parties nulles : ${gamesWonNobody}`;
     }
 
     turnNumber++;
     changePlayer();
 
 }
+
+
+
