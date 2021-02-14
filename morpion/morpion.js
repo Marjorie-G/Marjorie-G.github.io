@@ -9,7 +9,6 @@ let gamesWonPlayer1;
 let gamesWonPlayer2;
 let gamesWonNobody;
 
-let playerTurn;
 let playerWon;
 
 let case1 ;
@@ -25,18 +24,17 @@ let case9 ;
 let player1Win = document.getElementById("js-player1-win");
 let player2Win = document.getElementById("js-player2-win");
 let nobodyWon = document.getElementById("js-nobody-win");
+let playerTurn = document.getElementById("js-player-turn");
 
-//Au chargement de la page
+//Au chargement de la page pour l'affichage des scores
 
 if (localStorage.length === 0) {
+
     gamesWonPlayer1 = 0;
     gamesWonPlayer2 = 0;
     gamesWonNobody = 0;
 
-    localStorage.setItem("gamesWonPlayer1", gamesWonPlayer1);
-    localStorage.setItem("gamesWonPlayer2", gamesWonPlayer2);
-    localStorage.setItem("gamesWonNobody", gamesWonNobody);
-
+    storageScore();
     displayScore();
 
 }
@@ -50,7 +48,16 @@ else {
 
 }
 
-//------------------ Fonction pour afficher les score
+//------------------ Fonction pour stocker les scores
+
+function storageScore() {
+
+    localStorage.setItem("gamesWonPlayer1", gamesWonPlayer1);
+    localStorage.setItem("gamesWonPlayer2", gamesWonPlayer2);
+    localStorage.setItem("gamesWonNobody", gamesWonNobody);
+}
+
+//------------------ Fonction pour afficher les scores
 
 function displayScore() {
 
@@ -60,19 +67,23 @@ function displayScore() {
 
 }
 
+//------------------- Fonction pour afficher le tour du joueur
+
+function displayPlayersTurn() {
+    playerTurn.innerText = `C'est au tour du joueur ${player} de jouer`;
+}
+
 // ----------------- Fonction pour changer de joueur en fonction du tour
 
 function changePlayer() {
 
     if ((turnNumber % 2) == 0) {
         player = player2;
-        playerTurn = document.getElementById("js-player-turn");
-        playerTurn.innerText = `C'est au tour du joueur ${player} de jouer`;
+        displayPlayersTurn();
     }
     else {
         player = player1;
-        playerTurn = document.getElementById("js-player-turn");
-        playerTurn.innerText = `C'est au tour du joueur ${player} de jouer`;
+        displayPlayersTurn();
     }
 }
 
@@ -108,8 +119,7 @@ function reset() {
 function play() {
 
     //On empêche la partie de se poursuivre si le joueur précédent a gagné
-    //ou si le nombre de tours est supérieur > 9
-    if (playerWon === true || turnNumber > 9) {
+    if (playerWon === true) {
         return;
     }
 
@@ -143,26 +153,36 @@ function play() {
 
         if(player === player1) {
             gamesWonPlayer1 = gamesWonPlayer1 + 1 ;
-            localStorage.setItem("gamesWonPlayer1", gamesWonPlayer1);
         }
         else if (player === player2) {
             gamesWonPlayer2 += 1 ;
-            localStorage.setItem("gamesWonPlayer2", gamesWonPlayer2);
         }
-
-        displayScore();
-
     }
     else if (turnNumber === 9) {
         gamesWonNobody += 1;
-        localStorage.setItem("gamesWonNobody", gamesWonNobody);
-        nobodyWon.innerText = `Nombre de parties nulles : ${gamesWonNobody}`;
     }
 
+    storageScore();
+    displayScore();
     turnNumber++;
-    changePlayer();
+    
+    if (playerWon === true) {
+        playerTurn.innerText = `Le ${player} a gagné !`;
+    }
+    else if (playerWon === false && turnNumber === 10) {
+        playerTurn.innerText = `Egalité ! Partie nulle`;
+    }
+    else {
+        changePlayer();
+    }
+
+
+
+
 
 }
+
+//---------- Affichage du message si la partie est terminé
 
 
 
