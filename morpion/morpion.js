@@ -72,13 +72,11 @@ function displayPlayersTurn() {
 
 function changePlayer() {
 
-    if ((turnNumber % 2) == 0) {
+    if ((turnNumber % 2) === 0) {
         player = player2;
-        displayPlayersTurn();
     }
     else {
         player = player1;
-        displayPlayersTurn();
     }
 }
 
@@ -112,15 +110,17 @@ function reset() {
 
 function play() {
 
+    console.log(turnNumber);
+
     //On empêche la partie de se poursuivre si le joueur précédent a gagné
-    if (playerWon === true || turnNumber === 10) {
+    if (playerWon === true || (playerWon === false & turnNumber === 10)) {
         return;
     }
 
     //On vérifie que le joueur a le droit de joueur sur la case
     let h4 = document.getElementById("js-case-not-ok");
 
-    if (event.target.innerText != "" ) {
+    if (event.target.innerText !== "" ) {
         h4.innerText = "Veuillez choisir une autre case !";
         return;
     }
@@ -151,26 +151,23 @@ function play() {
         else if (player === player2) {
             gamesWonPlayer2 += 1 ;
         }
+
+        playerTurn.innerText = `Le ${player} a gagné !`;
     }
     else if (playerWon === false && turnNumber === 9) {
         gamesWonNobody += 1;
+        playerTurn.innerText = `Egalité ! Partie nulle`;
+        turnNumber++;
+    }
+    else {
+        turnNumber++;
+        changePlayer();
+        displayPlayersTurn();
     }
 
     storageScore();
     displayScore();
-    turnNumber++;
 
-    //Après avoir actualisé les scores, on change l'affichage si on a gagné
-    //Si pas de gagnant, on change de joueur
-    if (playerWon === true) {
-        playerTurn.innerText = `Le ${player} a gagné !`;
-    }
-    else if (playerWon === false && turnNumber === 10) {
-        playerTurn.innerText = `Egalité ! Partie nulle`;
-    }
-    else {
-        changePlayer();
-    }
 }
 
 
