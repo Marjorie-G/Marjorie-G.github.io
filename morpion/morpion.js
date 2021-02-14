@@ -33,19 +33,15 @@ if (localStorage.length === 0) {
     gamesWonPlayer1 = 0;
     gamesWonPlayer2 = 0;
     gamesWonNobody = 0;
-
     storageScore();
     displayScore();
-
 }
 else {
 
     gamesWonPlayer1 = parseInt(localStorage.getItem("gamesWonPlayer1"));
     gamesWonPlayer2 = parseInt(localStorage.getItem("gamesWonPlayer2"));
     gamesWonNobody =  parseInt(localStorage.getItem("gamesWonNobody"));
-
     displayScore();
-
 }
 
 //------------------ Fonction pour stocker les scores
@@ -64,7 +60,6 @@ function displayScore() {
     player1Win.innerText = `Nombre de parties gagnées par le joueur ${player1} : ${gamesWonPlayer1}`;
     player2Win.innerText= `Nombre de parties gagnées par le joueur ${player2} : ${gamesWonPlayer2}`;
     nobodyWon.innerText = `Nombre de parties nulles : ${gamesWonNobody}`;
-
 }
 
 //------------------- Fonction pour afficher le tour du joueur
@@ -90,7 +85,6 @@ function changePlayer() {
 //------------------ Fonction pour vérifier que le joueur a gagné ------------
 
 function win() {
-
 
     if((case1 === case2 && case2 === case3 && case2 !== "") || (case4 === case5 && case5 === case6 && case4 !== "") || (case7 === case8 && case8 === case9 && case7 !== "") || (case1 === case4 && case4 === case7 && case1 !== "") ||
         (case2 === case5 && case5 === case8 && case2 !== "") || (case3 === case6 && case6 === case9 && case3 !== "") || (case1 === case5 && case5 === case9 && case1 !== "") || (case3 === case5 && case5 === case7 && case3 !== "")) {
@@ -119,7 +113,7 @@ function reset() {
 function play() {
 
     //On empêche la partie de se poursuivre si le joueur précédent a gagné
-    if (playerWon === true) {
+    if (playerWon === true || turnNumber === 10) {
         return;
     }
 
@@ -158,14 +152,16 @@ function play() {
             gamesWonPlayer2 += 1 ;
         }
     }
-    else if (turnNumber === 9) {
+    else if (playerWon === false && turnNumber === 10) {
         gamesWonNobody += 1;
     }
 
     storageScore();
     displayScore();
     turnNumber++;
-    
+
+    //Après avoir actualisé les scores, on change l'affichage si on a gagné
+    //Si pas de gagnant, on change de joueur
     if (playerWon === true) {
         playerTurn.innerText = `Le ${player} a gagné !`;
     }
@@ -175,14 +171,6 @@ function play() {
     else {
         changePlayer();
     }
-
-
-
-
-
 }
-
-//---------- Affichage du message si la partie est terminé
-
 
 
