@@ -152,7 +152,7 @@ function play() {
             gamesWonPlayer2 += 1 ;
         }
     }
-    else if (playerWon === false && turnNumber === 10) {
+    else if (playerWon === false && turnNumber === 9) {
         gamesWonNobody += 1;
     }
 
