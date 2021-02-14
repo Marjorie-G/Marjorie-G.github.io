@@ -146,7 +146,7 @@ function play() {
     if (playerWon === true) {
 
         if(player === player1) {
-            gamesWonPlayer1 = gamesWonPlayer1 + 1 ;
+            gamesWonPlayer1 += 1 ;
         }
         else if (player === player2) {
             gamesWonPlayer2 += 1 ;
