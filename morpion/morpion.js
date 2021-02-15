@@ -76,7 +76,7 @@ function displayPlayersTurn() {
 // ----------------- F - Changer de joueur en fonction du tour -----------
 
 function changePlayer() {
-
+    
     if ((numberParty % 2) === 0) {
 
         if ((turnNumber % 2) === 0) {
@@ -85,7 +85,6 @@ function changePlayer() {
         else {
             player = player1;
         }
-
     }
     else {
 
@@ -96,7 +95,6 @@ function changePlayer() {
             player = player2;
         }
     }
-
 }
 
 //------------------ F - Vérifier que le joueur a gagné ------------
@@ -133,8 +131,6 @@ function reset() {
 }
 
 
-
-
 //Pour changer et afficher le joueur en début de partie
 changePlayer();
 displayPlayersTurn();
@@ -143,7 +139,7 @@ displayPlayersTurn();
 
 //------------------ F de jeu -- Programme principal ---------------------------------------
 
-function play() {
+function play(e) {
 
     console.log(numberParty);
 
@@ -155,18 +151,18 @@ function play() {
     //On vérifie que le joueur a le droit de joueur sur la case
     let h4 = document.getElementById("js-case-not-ok");
 
-    if (event.target.innerText !== "" ) {
+    if (e.target.innerText !== "" ) {
         h4.innerText = "Veuillez choisir une autre case !";
         return;
     }
     else {
         if(player === player1) {
-            event.target.style.color = 'red';
+            e.target.style.color = 'red';
         }
         else {
-            event.target.style.color = 'green';
+            e.target.style.color = 'green';
         }
-        event.target.innerText = `${player}`;
+        e.target.innerText = `${player}`;
         h4.innerText = "";
     }
 
