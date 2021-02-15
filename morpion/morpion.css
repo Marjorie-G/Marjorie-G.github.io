@@ -1,28 +1,114 @@
+body {
+
+}
+
 .container {
     text-align: center;
     font-family: 'Oswald', sans-serif;
 }
 
-.board {
-    display: flex;
-    justify-content: center;
+h1 {
+    margin-top: 80px;
+   text-shadow:  3px 3px 3px lightslategrey;
 }
 
-table {
-    border: 1px solid black;
-    border-collapse: collapse;
+h3 {
+    margin-top: 50px;
+}
+
+
+.board {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    margin-top: 20px;
+}
+
+.row-board {
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.row-board > div {
+
+    vertical-align: middle;
+    width: 150px;
+    height: 150px;
+    line-height: 150px;
+    border: 3px solid black;
+    font-size: 100px;
+
 }
 
 td {
     padding: 60px;
     border:1px solid black;
+
+}
+
+button {
+    padding: 0.5em;
+    margin: 0.5em;
+    border-radius: 20px;
+    box-shadow: 3px 3px 3px lightslategrey;
+    
+}
+
+button:hover {
+    border : solid black 3px;
+}
+
+#playAgain-btn{
+    margin-top: 2em;
+}
+
+.play-again {
+    /*display: none;*/
+}
+
+#rowScores {
+    display: flex;
+    justify-content: space-around;
+}
+
+#result {
+    border-style: outset;
+    margin-top: 80px;
+    padding: 30px;
+}
+
+#result > p {
+    margin: 4px;
+}
+
+#result > button {
+    margin-top: 30px;
+}
+
+#js-nobody-win {
+    margin-bottom: 20px;
 }
 
 @media (max-width: 700px) {
 
-    td {
-        padding: 30px;
-        border:1px solid black;
+    .row-board > div {
+
+        width: 80px;
+        height: 80px;
+        line-height: 80px;
+        vertical-align: middle;
+        border: 1px solid black;
+        font-size: xx-large;
+    }
+
+    #result {
+        font-size: small;
+    }
+
+    #result > button {
+        font-size: x-small;
     }
 
 }

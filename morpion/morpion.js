@@ -1,9 +1,10 @@
 //Déclaration des variables
-
+let numberParty ;
+let turnNumber = 1;
 const player1 = "X";
 const player2 = "O";
-let player = "X";
-let turnNumber = 1;
+
+let player ;
 
 let gamesWonPlayer1;
 let gamesWonPlayer2;
@@ -26,6 +27,7 @@ let player2Win = document.getElementById("js-player2-win");
 let nobodyWon = document.getElementById("js-nobody-win");
 let playerTurn = document.getElementById("js-player-turn");
 
+
 //Au chargement de la page pour l'affichage des scores
 
 if (localStorage.length === 0) {
@@ -33,6 +35,7 @@ if (localStorage.length === 0) {
     gamesWonPlayer1 = 0;
     gamesWonPlayer2 = 0;
     gamesWonNobody = 0;
+    numberParty = 1;
     storageScore();
     displayScore();
 }
@@ -41,19 +44,25 @@ else {
     gamesWonPlayer1 = parseInt(localStorage.getItem("gamesWonPlayer1"));
     gamesWonPlayer2 = parseInt(localStorage.getItem("gamesWonPlayer2"));
     gamesWonNobody =  parseInt(localStorage.getItem("gamesWonNobody"));
+    numberParty = parseInt(localStorage.getItem("numberParty"));
     displayScore();
 }
 
-//------------------ Fonction pour stocker les scores
+//Pour changer et afficher le joueur en début de partie
+changePlayer();
+displayPlayersTurn();
+
+//------------------ F - Stocker les scores --------------------
 
 function storageScore() {
 
     localStorage.setItem("gamesWonPlayer1", gamesWonPlayer1);
     localStorage.setItem("gamesWonPlayer2", gamesWonPlayer2);
     localStorage.setItem("gamesWonNobody", gamesWonNobody);
+    localStorage.setItem("numberParty", numberParty);
 }
 
-//------------------ Fonction pour afficher les scores
+//------------------ F- Afficher les scores -------------------
 
 function displayScore() {
 
@@ -62,25 +71,39 @@ function displayScore() {
     nobodyWon.innerText = `Nombre de parties nulles : ${gamesWonNobody}`;
 }
 
-//------------------- Fonction pour afficher le tour du joueur
+//------------------- F - Afficher le tour du joueur -------------
 
 function displayPlayersTurn() {
     playerTurn.innerText = `C'est au tour du joueur ${player} de jouer`;
 }
 
-// ----------------- Fonction pour changer de joueur en fonction du tour
+// ----------------- F - Changer de joueur en fonction du tour -----------
 
 function changePlayer() {
 
-    if ((turnNumber % 2) === 0) {
-        player = player2;
+    if ((numberParty % 2) === 0) {
+
+        if ((turnNumber % 2) === 0) {
+            player = player2;
+        }
+        else {
+            player = player1;
+        }
+
     }
     else {
-        player = player1;
+
+        if ((turnNumber % 2) === 0) {
+            player = player1;
+        }
+        else {
+            player = player2;
+        }
     }
+
 }
 
-//------------------ Fonction pour vérifier que le joueur a gagné ------------
+//------------------ F - Vérifier que le joueur a gagné ------------
 
 function win() {
 
@@ -93,24 +116,31 @@ function win() {
     }
 }
 
-//----------------- Fonction pour rejouer/réinialiser ----------------------
+// ---------------- F - Affichage du bouton rejouer --------
+
+function displayButton() {
+    let playAgain = document.getElementById("js-play-again");
+    playAgain.className = "";
+}
+
+//----------------- F - Rejouer -----------------------------
 
 function playAgain() {
     history.go();
 }
 
-//----------------- Fonction pour réinialiser les scores - on vide le stockage local
+//----------------- F - Réinialiser les scores - on vide le stockage local
 
 function reset() {
     localStorage.clear();
     playAgain();
 }
 
-//------------------ Fonction de jeu -- Programme principal ---------------------------------------
+//------------------ F de jeu -- Programme principal ---------------------------------------
 
 function play() {
 
-    console.log(turnNumber);
+    console.log(numberParty);
 
     //On empêche la partie de se poursuivre si le joueur précédent a gagné
     if (playerWon === true || (playerWon === false & turnNumber === 10)) {
@@ -125,7 +155,13 @@ function play() {
         return;
     }
     else {
-        event.target.innerText = player;
+        if(player === player1) {
+            event.target.style.color = 'red';
+        }
+        else {
+            event.target.style.color = 'green';
+        }
+        event.target.innerText = `${player}`;
         h4.innerText = "";
     }
 
@@ -152,12 +188,17 @@ function play() {
             gamesWonPlayer2 += 1 ;
         }
 
-        playerTurn.innerText = `Le ${player} a gagné !`;
+        displayButton();
+        playerTurn.innerText = `${player} a gagné !`;
+        numberParty++;
+
     }
     else if (playerWon === false && turnNumber === 9) {
         gamesWonNobody += 1;
         playerTurn.innerText = `Egalité ! Partie nulle`;
+        displayButton();
         turnNumber++;
+        numberParty++;
     }
     else {
         turnNumber++;
@@ -167,7 +208,6 @@ function play() {
 
     storageScore();
     displayScore();
-
 }
 
 

@@ -13,39 +13,47 @@
 
 
     <h1>TIC TAC TOE</h1>
+    <div id="player-turn">
+        <h3 id="js-player-turn"></h3>
+    </div>
 
-    <h3 id="js-player-turn">C'est au tour du joueur X de jouer</h3>
     <h4 id="js-case-not-ok"></h4>
 
     <div class="board">
-        <table class="table">
-            <tr>
-                <td id="case1" onclick="play()"></td>
-                <td id="case2" onclick="play()"></td>
-                <td id="case3" onclick="play()"></td>
-            </tr>
-            <tr>
-                <td id="case4" onclick="play()"></td>
-                <td id="case5" onclick="play()"></td>
-                <td id="case6" onclick="play()"></td>
-            </tr>
-            <tr>
-                <td id="case7" onclick="play()"></td>
-                <td id="case8" onclick="play()"></td>
-                <td id="case9" onclick="play()"></td>
-            </tr>
-        </table>
+            <div class="row-board">
+                <div id="case1" onclick="play()"></div>
+                <div id="case2" onclick="play()"></div>
+                <div id="case3" onclick="play()"></div>
+            </div>
+            <div class="row-board">
+                <div id="case4" onclick="play()"></div>
+                <div id="case5" onclick="play()"></div>
+                <div id="case6" onclick="play()"></div>
+            </div>
+            <div class="row-board">
+                <div id="case7" onclick="play()"></div>
+                <div id="case8" onclick="play()"></div>
+                <div id="case9" onclick="play()"></div>
+            </div>
     </div>
 
-    <p id="result"></p>
 
-    <button onclick="playAgain()">Rejouez</button>
 
-    <p id="js-player1-win"></p>
-    <p id="js-player2-win"></p>
-    <p id="js-nobody-win"></p>
+    <div id="playAgain-btn">
+        <button class="play-again" id="js-play-again" onclick="playAgain()">Rejouez</button>
+    </div>
 
-    <button onclick="reset()">Réinitialiser les scores</button>
+    <div class="row" id="rowScores">
+        <div class="col"></div>
+        <div class="col" id="result">
+        <p id="js-player1-win"></p>
+        <p id="js-player2-win"></p>
+        <p id="js-nobody-win"></p>
+        <button class="btn" onclick="reset()">Réinitialiser les scores</button>
+        </div>
+        <div class="col"></div>
+    </div>
+
 
 </div>
 <script src="morpion.js"></script>
