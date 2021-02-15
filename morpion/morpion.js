@@ -28,30 +28,6 @@ let nobodyWon = document.getElementById("js-nobody-win");
 let playerTurn = document.getElementById("js-player-turn");
 
 
-//Au chargement de la page pour l'affichage des scores
-
-if (localStorage.length === 0) {
-
-    gamesWonPlayer1 = 0;
-    gamesWonPlayer2 = 0;
-    gamesWonNobody = 0;
-    numberParty = 1;
-    storageScore();
-    displayScore();
-}
-else {
-
-    gamesWonPlayer1 = parseInt(localStorage.getItem("gamesWonPlayer1"));
-    gamesWonPlayer2 = parseInt(localStorage.getItem("gamesWonPlayer2"));
-    gamesWonNobody =  parseInt(localStorage.getItem("gamesWonNobody"));
-    numberParty = parseInt(localStorage.getItem("numberParty"));
-    displayScore();
-}
-
-//Pour changer et afficher le joueur en début de partie
-changePlayer();
-displayPlayersTurn();
-
 //------------------ F - Stocker les scores --------------------
 
 function storageScore() {
@@ -135,6 +111,33 @@ function reset() {
     localStorage.clear();
     playAgain();
 }
+
+
+//Au chargement de la page pour l'affichage des scores
+
+if (localStorage.length === 0) {
+
+    gamesWonPlayer1 = 0;
+    gamesWonPlayer2 = 0;
+    gamesWonNobody = 0;
+    numberParty = 1;
+    storageScore();
+    displayScore();
+}
+else {
+
+    gamesWonPlayer1 = parseInt(localStorage.getItem("gamesWonPlayer1"));
+    gamesWonPlayer2 = parseInt(localStorage.getItem("gamesWonPlayer2"));
+    gamesWonNobody =  parseInt(localStorage.getItem("gamesWonNobody"));
+    numberParty = parseInt(localStorage.getItem("numberParty"));
+    displayScore();
+}
+
+//Pour changer et afficher le joueur en début de partie
+changePlayer();
+displayPlayersTurn();
+
+
 
 //------------------ F de jeu -- Programme principal ---------------------------------------
 
