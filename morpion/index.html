@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Morpion - Marjo</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Oswald&display=swap" rel="stylesheet">
+    <link href="morpion.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="container">
+
+
+    <h1>TIC TAC TOE</h1>
+    <div id="player-turn">
+        <h3 id="js-player-turn"></h3>
+    </div>
+
+    <h4 id="js-case-not-ok"></h4>
+
+    <div class="board">
+            <div class="row-board">
+                <div id="case1" onclick="play()"></div>
+                <div id="case2" onclick="play()"></div>
+                <div id="case3" onclick="play()"></div>
+            </div>
+            <div class="row-board">
+                <div id="case4" onclick="play()"></div>
+                <div id="case5" onclick="play()"></div>
+                <div id="case6" onclick="play()"></div>
+            </div>
+            <div class="row-board">
+                <div id="case7" onclick="play()"></div>
+                <div id="case8" onclick="play()"></div>
+                <div id="case9" onclick="play()"></div>
+            </div>
+    </div>
+
+
+
+    <div id="playAgain-btn">
+        <button class="play-again" id="js-play-again" onclick="playAgain()">Rejouez</button>
+    </div>
+
+    <div class="row" id="rowScores">
+        <div class="col"></div>
+        <div class="col" id="result">
+        <p id="js-player1-win"></p>
+        <p id="js-player2-win"></p>
+        <p id="js-nobody-win"></p>
+        <button class="btn" onclick="reset()">Réinitialiser les scores</button>
+        </div>
+        <div class="col"></div>
+    </div>
+
+
+</div>
+<script src="morpion.js"></script>
+</body>
+</html>
